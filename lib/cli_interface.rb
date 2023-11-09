@@ -27,20 +27,20 @@ class CLIInterface < Thor
     puts "OpenAI API key updated."
   end
 
-  desc "add_context PATH", "Add a file or directory to Codebuddy's context by providing its path"
-  def add_context(path)
+  desc "add PATH", "Add a file or directory to Codebuddy's context by providing its path"
+  def add(path)    
     @context_manager.add_path(path)
     puts "#{path} added to context."
   end
 
-  desc "remove_context PATH", "Remove a file or directory from Codebuddy's context by providing its path"
-  def remove_context(path)
+  desc "remove PATH", "Remove a file or directory from Codebuddy's context by providing its path"
+  def remove(path)
     @context_manager.remove_path(path)
     puts "#{path} removed from context."
   end
 
-  desc "view_contexts", "View current context paths"
-  def view_contexts
+  desc "view_paths", "View current context paths"
+  def view_paths
     context_paths = @context_manager.context_paths
     if context_paths.empty?
       puts "No context paths set."

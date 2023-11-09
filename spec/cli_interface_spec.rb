@@ -19,34 +19,34 @@ RSpec.describe CLIInterface do
     end
   end
 
-  describe '#add_context' do
+  describe '#add' do
     it 'adds a path to the context' do
-      expect { cli_interface.add_context(test_path) }
+      expect { cli_interface.add(test_path) }
         .to output(/#{test_path} added to context/).to_stdout
     end
   end
 
-  describe '#remove_context' do
+  describe '#remove' do
     it 'removes a directory from the context' do
-      expect { cli_interface.remove_context(test_path) }
+      expect { cli_interface.remove(test_path) }
         .to output(/#{test_path} removed from context/).to_stdout
     end
   end
 
-  describe '#view_contexts' do
+  describe '#view_paths' do
     context 'when there are no context paths' do
       it 'informs that no context paths are set' do
-        expect { cli_interface.view_contexts }.to output("No context paths set.\n").to_stdout
+        expect { cli_interface.view_paths }.to output("No context paths set.\n").to_stdout
       end
     end
 
     context 'when there are context paths' do
       let(:path) { 'spec/fixtures' }
 
-      before { cli_interface.add_context(path) }
+      before { cli_interface.add(path) }
 
       it 'displays the current context paths' do
-        expect { cli_interface.view_contexts }.to output(/Current context paths:\n#{path}\n/).to_stdout
+        expect { cli_interface.view_paths }.to output(/Current context paths:\n#{path}\n/).to_stdout
       end
     end
   end  
