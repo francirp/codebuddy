@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require "pry"
 require_relative "codebuddy/version"
 require_relative "./cli_interface"
 require_relative "./command_executor"

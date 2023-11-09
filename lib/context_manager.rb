@@ -4,6 +4,8 @@ class ContextManager
   MAX_CHAR_LIMIT = MAX_TOKEN_LIMIT * AVG_CHARS_PER_TOKEN
   ALLOWED_EXTENSIONS = ['.rb', '.txt', '.css', '.html', '.erb', '.js', '.jsx']
 
+  attr_reader :context_paths
+
   def initialize
     @context_paths = []
     @current_char_count = 0
@@ -64,7 +66,7 @@ class ContextManager
     ALLOWED_EXTENSIONS.include?(File.extname(path))
   end
 
-  def add_file_to_context(path)
+  def add_file_to_context(path)   
     @context_paths << path
     @current_char_count += calculate_char_count(path)
     "Path #{path} added to context."
@@ -78,15 +80,20 @@ class ContextManager
     unsupported_files = Dir.glob(File.join(path, '**/*')).reject do |file|
       File.directory?(file) || allowed_file_type?(file)
     end
-
+        
     if unsupported_files.any?
-      warning_message = "\e[33mWarning: The following files have unsupported types and will not be included: "
-      warning_message += unsupported_files.join(', ')
-      warning_message += "\nSupported types are: #{ALLOWED_EXTENSIONS.join(', ')}\e[0m"
-      puts warning_message
+      directory_contains_unsupported_files_error(unsupported_files)
+      return false
     end
 
-    handle_directory(path)
+    @context_paths << path
+  end
+
+  def directory_contains_unsupported_files_error
+    warning_message = "\e[33mWarning: The following files have unsupported types and will not be included: "
+    warning_message += unsupported_files.join(', ')
+    warning_message += "\nSupported types are: #{ALLOWED_EXTENSIONS.join(', ')}\e[0m"
+    puts warning_message
   end
 
   def get_allowed_files(directory_path)

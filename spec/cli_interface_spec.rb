@@ -33,6 +33,24 @@ RSpec.describe CLIInterface do
     end
   end
 
+  describe '#view_contexts' do
+    context 'when there are no context paths' do
+      it 'informs that no context paths are set' do
+        expect { cli_interface.view_contexts }.to output("No context paths set.\n").to_stdout
+      end
+    end
+
+    context 'when there are context paths' do
+      let(:path) { 'spec/fixtures' }
+
+      before { cli_interface.add_context(path) }
+
+      it 'displays the current context paths' do
+        expect { cli_interface.view_contexts }.to output(/Current context paths:\n#{path}\n/).to_stdout
+      end
+    end
+  end  
+
   describe '#ask' do
     before do
       allow_any_instance_of(ChatGPTAssistant).to receive(:send_request).with(test_query)

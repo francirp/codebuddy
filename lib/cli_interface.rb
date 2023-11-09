@@ -39,6 +39,17 @@ class CLIInterface < Thor
     puts "#{path} removed from context."
   end
 
+  desc "view_contexts", "View current context paths"
+  def view_contexts
+    context_paths = @context_manager.context_paths
+    if context_paths.empty?
+      puts "No context paths set."
+    else
+      puts "Current context paths:"
+      context_paths.each { |path| puts path }
+    end
+  end
+
   desc "ask QUERY", "Send a query to Codebuddy"
   def ask(query)
     response = @chat_gpt_assistant.send_request(query)
