@@ -1,25 +1,30 @@
 class FileManager
-  def initialize(project_path)
-    @project_path = project_path
-  end
-
-  def read_files(file_paths)
-    # Code to read specified files
+  def initialize
+    # Any initialization code needed
   end
 
   def create_file(file_path, content)
-    # Code to create a new file
+    File.open(file_path, 'w') { |file| file.write(content) }
+    "File created: #{file_path}"
+  rescue => e
+    "Error creating file: #{e.message}"
   end
 
-  def modify_file(file_path, new_content)
-    # Code to modify an existing file
+  def update_file(file_path, content)
+    return "File does not exist: #{file_path}" unless File.exist?(file_path)
+
+    File.open(file_path, 'w') { |file| file.write(content) }
+    "File updated: #{file_path}"
+  rescue => e
+    "Error updating file: #{e.message}"
   end
 
   def delete_file(file_path)
-    # Code to delete a file
+    return "File does not exist: #{file_path}" unless File.exist?(file_path)
+
+    File.delete(file_path)
+    "File deleted: #{file_path}"
+  rescue => e
+    "Error deleting file: #{e.message}"
   end
-
-  private
-
-  # Private helper methods
 end
