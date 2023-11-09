@@ -3,7 +3,7 @@
 require_relative "codebuddy/version"
 require_relative "./cli_interface"
 require_relative "./command_executor"
-require_relative "./chatgpt_assistant"
+require_relative "./chat_gpt_assistant"
 require_relative "./context_manager"
 require_relative "./file_manager"
 
