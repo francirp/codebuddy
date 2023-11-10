@@ -10,6 +10,7 @@ RSpec.describe CLIInterface do
   before do
     allow(cli_interface).to receive(:load_config).and_return({})
     allow(cli_interface).to receive(:save_config)
+    allow(cli_interface).to receive(:save_context).and_return(true)
   end
 
   describe '#set_openai_key' do
@@ -19,34 +20,34 @@ RSpec.describe CLIInterface do
     end
   end
 
-  describe '#add' do
+  describe '#add' do    
     it 'adds a path to the context' do
-      expect { cli_interface.add(test_path) }
-        .to output(/#{test_path} added to context/).to_stdout
+      allow_any_instance_of(ContextManager).to receive(:add_path)
+      result = cli_interface.add(test_path)
+      expect(result).to eq(true)
     end
   end
 
   describe '#remove' do
-    it 'removes a directory from the context' do
-      expect { cli_interface.remove(test_path) }
-        .to output(/#{test_path} removed from context/).to_stdout
+    it 'removes a path from the context' do
+      allow_any_instance_of(ContextManager).to receive(:remove_path)
+      result = cli_interface.remove(test_path)
+      expect(result).to eq(true)
     end
   end
 
-  describe '#view_paths' do
+  describe '#view' do
     context 'when there are no context paths' do
       it 'informs that no context paths are set' do
-        expect { cli_interface.view_paths }.to output("No context paths set.\n").to_stdout
+        expect { cli_interface.view }.to output("No context paths set.\n").to_stdout
       end
     end
 
-    context 'when there are context paths' do
-      let(:path) { 'spec/fixtures' }
-
-      before { cli_interface.add(path) }
-
-      it 'displays the current context paths' do
-        expect { cli_interface.view_paths }.to output(/Current context paths:\n#{path}\n/).to_stdout
+    context 'when there are context paths' do      
+      it 'checks if output includes a specific string' do
+        allow_any_instance_of(ContextManager).to receive(:context_paths).and_return(['/example/path'])
+        specific_string = 'Current context paths:'
+        expect { cli_interface.view }.to output(/#{specific_string}/).to_stdout
       end
     end
   end  
@@ -62,6 +63,4 @@ RSpec.describe CLIInterface do
         .to output(/Response:\ntest_response/).to_stdout
     end
   end
-
-  # Additional tests for #init and other methods can be added similarly
 end

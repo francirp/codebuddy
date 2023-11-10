@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
-require 'codebuddy'
+require_relative '../lib/codebuddy'
 
 CLIInterface.start(ARGV)

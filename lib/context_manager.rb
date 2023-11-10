@@ -4,7 +4,7 @@ class ContextManager
   MAX_CHAR_LIMIT = MAX_TOKEN_LIMIT * AVG_CHARS_PER_TOKEN
   ALLOWED_EXTENSIONS = ['.rb', '.txt', '.css', '.html', '.erb', '.js', '.jsx']
 
-  attr_reader :context_paths
+  attr_reader :context_paths, :current_char_count
 
   def initialize
     @context_paths = []
@@ -12,26 +12,25 @@ class ContextManager
   end
 
   def add_path(path)
-    if exceeds_token_limit?(path)
-      raise "Adding #{path} exceeds the maximum token limit."
-    end
-
+    path = resolve_full_path(path)
+    return "Path #{path} already in context." if @context_paths.include?(path)
     return "Path does not exist." unless File.exist?(path)
+    return "Adding #{path} exceeds the maximum token limit." if exceeds_token_limit?(path)    
 
     if File.file?(path)
-      allowed_file_type?(path) ? add_file_to_context(path) : unsupported_file_message(path)
+      allowed_file_type?(path) ? add_path_to_context(path) : unsupported_file_type_message(path)
     elsif File.directory?(path)
       add_directory_to_context(path)
     end
   end
 
   def remove_path(path)
-    if @context_paths.delete(path)
-      @current_char_count -= calculate_char_count(path)
-      "Path #{path} removed from context."
-    else
-      "Path not found in context."
-    end
+    path = resolve_full_path(path)
+    return "Path not found in context." unless @context_paths.delete(path)
+
+    @current_char_count -= calculate_char_count(path)
+    @current_char_count = 0 if @context_paths.empty?
+    "Path #{path} removed from context."
   end
 
   def current_context
@@ -44,7 +43,34 @@ class ContextManager
     end.compact.join("\n\n")
   end
 
+  def to_h
+    {
+      'context_paths' => @context_paths,
+      'current_char_count' => @current_char_count
+      # Include other relevant attributes here
+    }
+  end
+
+  def self.from_h(hash)
+    new_context_manager = new
+    new_context_manager.instance_variable_set(:@context_paths, hash['context_paths'])
+    new_context_manager.instance_variable_set(:@current_char_count, hash['current_char_count'])
+    # Set other attributes from the hash as needed
+    new_context_manager
+  end
+  
   private
+
+  def resolve_full_path(path)
+    normalized_path = path.chomp('/') # Remove trailing slash
+    return normalized_path if path_absolute?(normalized_path)
+
+    File.join(Dir.pwd, normalized_path)
+  end
+
+  def path_absolute?(path)
+    Pathname.new(path).absolute?
+  end
 
   def exceeds_token_limit?(path)
     new_char_count = @current_char_count + calculate_char_count(path)
@@ -66,14 +92,14 @@ class ContextManager
     ALLOWED_EXTENSIONS.include?(File.extname(path))
   end
 
-  def add_file_to_context(path)   
+  def add_path_to_context(path)   
     @context_paths << path
     @current_char_count += calculate_char_count(path)
     "Path #{path} added to context."
   end
 
-  def unsupported_file_message(path)
-    "\e[31mUnsupported file type for #{path}. Supported types are: #{ALLOWED_EXTENSIONS.join(', ')}\e[0m"
+  def unsupported_file_type_message(path)
+    "Unsupported file type for #{path}. Supported types are: #{ALLOWED_EXTENSIONS.join(', ')}"
   end
 
   def add_directory_to_context(path)
@@ -83,13 +109,12 @@ class ContextManager
         
     if unsupported_files.any?
       directory_contains_unsupported_files_error(unsupported_files)
-      return false
-    end
-
-    @context_paths << path
+    else
+      add_path_to_context(path)
+    end    
   end
 
-  def directory_contains_unsupported_files_error
+  def directory_contains_unsupported_files_error(unsupported_files)
     warning_message = "\e[33mWarning: The following files have unsupported types and will not be included: "
     warning_message += unsupported_files.join(', ')
     warning_message += "\nSupported types are: #{ALLOWED_EXTENSIONS.join(', ')}\e[0m"

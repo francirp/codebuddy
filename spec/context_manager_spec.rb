@@ -19,7 +19,13 @@ RSpec.describe ContextManager do
       end
     end
 
-    # Add more contexts for different scenarios like token limit exceeded, unsupported file types, etc.
+    context 'when adding a file with an unsupported file type' do
+      let(:file_path) { 'spec/fixtures/unsupported_file.xyz' }
+
+      it 'returns an unsupported file type message' do
+        expect(context_manager.add_path(file_path)).to include("Unsupported file type for")
+      end
+    end    
   end
 
   describe '#remove_path' do
