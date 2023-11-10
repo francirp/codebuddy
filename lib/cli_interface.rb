@@ -74,13 +74,13 @@ class CLIInterface < Thor
 
     say ""
 
-    spinner = TTY::Spinner.new("[:spinner] Processing...", format: :pulse_2)
-    spinner.auto_spin
+    # spinner = TTY::Spinner.new("[:spinner] Processing...", format: :pulse_2)
+    # spinner.auto_spin
 
     ask_service = Ask.new(query)
     ask_service.call
     
-    spinner.stop('Assistant responded:')
+    # spinner.stop('Assistant responded:')
     
     ask_service.assistant_messages.each do |message|
       say message, :white

@@ -19,6 +19,8 @@ class Ask
   private
 
   def create_message
+    puts "Prompt  to AI:"
+    puts prompt
     message_service = OpenAI::CreateMessage.new(prompt)
     message_service.call
   end

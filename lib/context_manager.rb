@@ -38,7 +38,7 @@ class ContextManager
       if File.directory?(path)
         handle_directory(path)
       elsif File.file?(path)
-        "#{path}:\n#{File.read(path)}"
+        handle_file(path)
       end
     end.compact.join("\n\n")
   end
@@ -130,8 +130,14 @@ class ContextManager
   def handle_directory(directory_path)
     allowed_files = get_allowed_files(directory_path)
     
-    allowed_files.map do |file|
-      "#{file}:\n#{File.read(file)}"
+    result = allowed_files.map do |file|
+      handle_file(file)
     end.join("\n\n")
+  end
+
+  def handle_file(file_path)
+    file_lines = File.readlines(file_path)
+    lines_string = file_lines.map.with_index {|line, i| "#{i + 1}. #{line}"}.join
+    "#{file_path}:\n```\n#{lines_string}\n```\n\n"
   end
 end

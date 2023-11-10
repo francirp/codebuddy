@@ -9,7 +9,9 @@ module OpenAI
     end
 
     def call
+      puts "polling run..."
       @response = client.get("/v1/threads/#{thread_id}/runs/#{run_id}")
+      binding.pry
       handle_function_calls if requires_action?
       response
     end
@@ -54,11 +56,19 @@ module OpenAI
             files.each do |file|
               file_manager.create_file(file["file_path"], file["file_content"])
             end
-          when "update_repo_files"
+          when "replace_repo_files"
             json = JSON.parse(arguments)
             files = json["files"]
             files.each do |file|
-              file_manager.update_file(file["file_path"], file["file_content"])
+              file_manager.replace_file(file["file_path"], file["file_content"])
+            end
+          when "update_repo_files"
+            puts "updating repo files..."
+            json = JSON.parse(arguments)  
+            files = json["files"]
+            files.each do |file|
+              diffs = file["diffs"]
+              file_manager.update_file(file["file_path"], diffs)
             end
           when "delete_repo_files"
             json = JSON.parse(arguments)
