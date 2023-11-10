@@ -1,4 +1,5 @@
 require 'thor'
+require 'tty-spinner'
   # color options for Thor:
     # :on_blue, :bold, :black, :red, :yellow, :blue, :magenta, :cyan, :white, 
     # :on_black, :on_red, :on_green, :on_yellow, :on_magenta, :on_cyan, :on_white
@@ -68,15 +69,22 @@ class CLIInterface < Thor
   desc "ask", "Send a query to Codebuddy"
   def ask
     say "\e[1mAsk your AI buddy to do something or a question.\e[22m", :green
-    print "  > "
+    print "> "
     query = $stdin.gets.strip
+
+    say ""
+
+    spinner = TTY::Spinner.new("[:spinner] Processing...", format: :pulse_2)
+    spinner.auto_spin
 
     ask_service = Ask.new(query)
     ask_service.call
     
+    spinner.stop('Assistant responded:')
+    
     ask_service.assistant_messages.each do |message|
-      say "\e[1m#{message}\e[22m", :green
-    end
+      say message, :white
+    end    
   end
 
   private

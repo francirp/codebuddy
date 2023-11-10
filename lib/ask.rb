@@ -19,7 +19,6 @@ class Ask
   private
 
   def create_message
-    binding.pry
     message_service = OpenAI::CreateMessage.new(prompt)
     message_service.call
   end

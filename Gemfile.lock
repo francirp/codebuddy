@@ -3,7 +3,9 @@ PATH
   specs:
     codebuddy (0.1.0)
       httparty
+      pry
       thor
+      tty-spinner
 
 GEM
   remote: https://rubygems.org/
@@ -34,6 +36,9 @@ GEM
       rspec-support (~> 3.12.0)
     rspec-support (3.12.1)
     thor (1.3.0)
+    tty-cursor (0.7.1)
+    tty-spinner (0.9.3)
+      tty-cursor (~> 0.7)
 
 PLATFORMS
   arm64-darwin-21
@@ -41,7 +46,6 @@ PLATFORMS
 
 DEPENDENCIES
   codebuddy!
-  pry
   rake (~> 13.0)
   rspec (~> 3.0)
 
