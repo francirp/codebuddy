@@ -8,9 +8,9 @@ RSpec.describe CLIInterface do
   let(:test_query) { 'What is Ruby?' }
 
   before do
-    allow(cli_interface).to receive(:load_config).and_return({})
-    allow(cli_interface).to receive(:save_config)
-    allow(cli_interface).to receive(:save_context).and_return(true)
+    allow_any_instance_of(ConfigManager).to receive(:load_config).and_return({})
+    allow_any_instance_of(ConfigManager).to receive(:save_config).and_return(true)
+    allow_any_instance_of(ConfigManager).to receive(:save_context).and_return(true)
   end
 
   describe '#set_openai_key' do
