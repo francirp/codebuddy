@@ -15,16 +15,9 @@ module OpenAI
       assistant_messages = []
       response["data"].each do |item|
         break if item['role'] == 'user'
-        assistant_messages << item
+        assistant_messages << item.dig("content", 0, "text", "value")
       end
       assistant_messages.reverse
-    end
-
-    def print_unread_messages
-      recent_assistant_messages.each do |hash|
-        text = hash.dig("content", 0, "text", "value")
-        puts text
-      end
     end
 
     def id

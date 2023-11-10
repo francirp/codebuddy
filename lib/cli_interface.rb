@@ -1,4 +1,7 @@
 require 'thor'
+  # color options for Thor:
+    # :on_blue, :bold, :black, :red, :yellow, :blue, :magenta, :cyan, :white, 
+    # :on_black, :on_red, :on_green, :on_yellow, :on_magenta, :on_cyan, :on_white
 require 'json'
 
 class CLIInterface < Thor
@@ -22,7 +25,7 @@ class CLIInterface < Thor
     config_manager.context_manager = @context_manager
     config_manager.save_context
     
-    puts "Codebuddy ready."
+    puts "Codebuddy ready. Call `codebuddy ask` to ask your AI Agent to do something."
   end
 
   desc "set_openai_key KEY", "Set your OpenAI API key"
@@ -64,26 +67,16 @@ class CLIInterface < Thor
 
   desc "ask", "Send a query to Codebuddy"
   def ask
-    puts "How can your codebuddy help you?"
+    say "\e[1mAsk your AI buddy to do something or a question.\e[22m", :green
+    print "  > "
     query = $stdin.gets.strip
 
-    message_service = OpenAI::CreateMessage.new(query)
-    message_service.call
-
-    run_service = OpenAI::CreateRun.new
-    run_service.call
-
-    finished = false
-    while !finished
-      sleep(2)
-      retrieve_run_service = OpenAI::RetrieveRun.new(run_service.id)
-      retrieve_run_service.call
-      finished = retrieve_run_service.finished?
+    ask_service = Ask.new(query)
+    ask_service.call
+    
+    ask_service.assistant_messages.each do |message|
+      say "\e[1m#{message}\e[22m", :green
     end
-
-    list_messages_service = OpenAI::ListMessages.new
-    list_messages_service.call
-    list_messages_service.print_unread_messages
   end
 
   private
