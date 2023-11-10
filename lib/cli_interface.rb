@@ -83,10 +83,7 @@ class CLIInterface < Thor
 
     list_messages_service = OpenAI::ListMessages.new
     list_messages_service.call
-    binding.pry
     list_messages_service.print_unread_messages
-
-    puts "Response:\n#{response}"
   end
 
   private
