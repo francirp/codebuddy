@@ -57,6 +57,7 @@ module OpenAI
             files.each do |file|
               file_manager.create_file(file["file_path"], file["file_content"])
             end
+            output = "success"
           when "get_repo_files"
             json = JSON.parse(arguments)
             files = json["file_paths"]
@@ -70,6 +71,7 @@ module OpenAI
             files.each do |file|
               file_manager.replace_file(file["file_path"], file["file_content"])
             end
+            output = "success"
           when "update_repo_files"
             puts "updating repo files..."
             json = JSON.parse(arguments)  
@@ -78,18 +80,20 @@ module OpenAI
               diffs = file["diffs"]
               file_manager.update_file(file["file_path"], diffs)
             end
+            output = "success"
           when "delete_repo_files"
             json = JSON.parse(arguments)
             files = json["file_paths"]
             files.each do |file|
               file_manager.delete_file(file)
             end
+            output = "success"
           when "execute_terminal_code"
             json = JSON.parse(arguments)
             operations = json["ordered_terminal_operations"]
-            operations.each do |operation|
+            output = operations.map do |operation|
               CommandExecutor.new.execute(operation)
-            end
+            end.join("\n")
           end
         rescue => e
           output = e.message

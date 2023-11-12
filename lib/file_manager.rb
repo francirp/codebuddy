@@ -6,6 +6,8 @@ class FileManager
   def create_file(file_path, content)
     puts "creating file #{file_path}"
     File.open(file_path, 'w') { |file| file.write(content) }
+    context_manager.add_path(file_path)
+    config_manager.save_context
     puts "File created: #{file_path}"
   end
 
@@ -29,6 +31,8 @@ class FileManager
     return "File does not exist: #{file_path}" unless File.exist?(file_path)
 
     File.delete(file_path)
+    context_manager.remove_path(file_path)
+    config_manager.save_context
     puts "File deleted: #{file_path}"
   end
 
@@ -36,5 +40,13 @@ class FileManager
     file_lines = File.readlines(file_path)
     lines_string = file_lines.map.with_index {|line, i| "#{i + 1}. #{line}"}.join
     "#{file_path}:\n```\n#{lines_string}\n```"
+  end
+
+  def config_manager
+    @config_manager ||= ConfigManager.new
+  end
+
+  def context_manager
+    config_manager.context_manager
   end
 end
