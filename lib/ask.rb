@@ -19,8 +19,6 @@ class Ask
   private
 
   def create_message
-    puts "Prompt  to AI:"
-    puts prompt
     message_service = OpenAI::CreateMessage.new(prompt)
     message_service.call
   end
@@ -42,10 +40,9 @@ class Ask
     %Q(
       [User Message]
       #{query}
-
-      [Code Repository]
-      #{context_manager.current_context}
     )
+    # [Code Repository]
+    # #{context_manager.current_context}
   end
 
   def context_manager

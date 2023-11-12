@@ -44,6 +44,7 @@ module OpenAI
       functions = array.find_all { |tool| tool["type"] == "function" } # can be other types of actions besides functions
       outputs = functions.map do |function|
         name = function.dig("function", "name")
+        puts "action: #{name}"
         arguments = function.dig("function", "arguments")        
         output = ""
         begin
@@ -54,6 +55,10 @@ module OpenAI
             files.each do |file|
               file_manager.create_file(file["file_path"], file["file_content"])
             end
+          when "get_repo"
+            json = JSON.parse(arguments)            
+            puts "reasoning: #{json['reasoning']}"
+            output = ConfigManager.new.context_manager.current_context
           when "replace_repo_files"
             json = JSON.parse(arguments)
             files = json["files"]
@@ -81,7 +86,6 @@ module OpenAI
               CommandExecutor.new.execute(operation)
             end
           end
-          output = "success"
         rescue => e
           output = e.message
         end

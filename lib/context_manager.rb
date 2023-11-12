@@ -2,7 +2,7 @@ class ContextManager
   MAX_TOKEN_LIMIT = 100_000
   AVG_CHARS_PER_TOKEN = 4
   MAX_CHAR_LIMIT = MAX_TOKEN_LIMIT * AVG_CHARS_PER_TOKEN
-  ALLOWED_EXTENSIONS = ['.rb', '.txt', '.css', '.html', '.erb', '.js', '.jsx']
+  ALLOWED_EXTENSIONS = ['.rb', '.txt', '.css', '.html', '.erb', '.js', '.jsx', 'Gemfile']
 
   attr_reader :context_paths, :current_char_count
 
@@ -107,11 +107,8 @@ class ContextManager
       File.directory?(file) || allowed_file_type?(file)
     end
         
-    if unsupported_files.any?
-      directory_contains_unsupported_files_error(unsupported_files)
-    else
-      add_path_to_context(path)
-    end    
+    directory_contains_unsupported_files_error(unsupported_files) if unsupported_files.any?
+    add_path_to_context(path)
   end
 
   def directory_contains_unsupported_files_error(unsupported_files)
