@@ -11,6 +11,7 @@ module OpenAI
     def call
       puts "polling run..."
       @response = client.get("/v1/threads/#{thread_id}/runs/#{run_id}")
+      puts "run status: #{status}"
       handle_function_calls if requires_action?
       response
     end

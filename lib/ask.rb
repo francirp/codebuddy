@@ -40,12 +40,15 @@ class Ask
   end
 
   def prompt
-    file_tree = build_directory_structure(context_manager.context_paths)
+    absolute_paths = context_manager.context_paths.map { |path| File.expand_path(path) }
+    tree_generator = GenerateTree.new(absolute_paths)
+    file_tree = tree_generator.call
+
     %Q(
 [User Message]
 #{query}
 
-[Code Repository File Structure]
+#{file_tree.empty? ? "" : "[Code Repository File Structure]"}
 #{file_tree}
     )
   end
@@ -54,20 +57,38 @@ class Ask
     ConfigManager.new.context_manager
   end
 
-  def build_directory_structure(paths, prefix = '', result = '')
-    paths.sort.each do |path|
-      basename = File.basename(path)
+  def generate_tree_structure(paths)
+    cwd = Dir.pwd
   
-      # Check if it's a directory
-      if File.directory?(path)
-        result += "#{prefix}#{basename}/\n"
-        # Recursively list contents of the directory
-        inner_paths = Dir.glob("#{path}/*")
-        result = build_directory_structure(inner_paths, "#{prefix}  ", result)
-      else
-        result += "#{prefix}#{basename}\n"
+    # Convert absolute paths to relative paths
+    relative_paths = paths.map { |path| Pathname.new(path).relative_path_from(Pathname.new(cwd)).to_s }
+  
+    # Build and return the tree structure
+    build_tree(relative_paths)
+  end
+  
+  def build_tree(paths)
+    tree = {}
+    
+    paths.each do |path|
+      current_level = tree
+  
+      path.split('/').each do |part|
+        current_level[part] ||= {}
+        current_level = current_level[part]
       end
     end
-    result
+  
+    format_tree(tree)
+  end
+  
+  def format_tree(node, prefix = "")
+    node.map do |key, children|
+      if children.empty?
+        "#{prefix}#{key}"
+      else
+        "#{prefix}#{key}/\n" + format_tree(children, "#{prefix}  ")
+      end
+    end.join("\n")
   end
 end

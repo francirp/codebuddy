@@ -2,6 +2,7 @@
 require "pry"
 require_relative "codebuddy/version"
 require_relative "./command_executor"
+require_relative "./generate_tree"
 require_relative "./chat_gpt_assistant"
 require_relative "./context_manager"
 require_relative "./file_manager"
