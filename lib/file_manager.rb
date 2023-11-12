@@ -31,4 +31,10 @@ class FileManager
     File.delete(file_path)
     puts "File deleted: #{file_path}"
   end
+
+  def get_file(file_path)
+    file_lines = File.readlines(file_path)
+    lines_string = file_lines.map.with_index {|line, i| "#{i + 1}. #{line}"}.join
+    "#{file_path}:\n```\n#{lines_string}\n```"
+  end
 end

@@ -49,16 +49,21 @@ module OpenAI
         output = ""
         begin
           case name
+          when "multi_tool_use.parallel"
+            binding.pry
           when "create_repo_files"
             json = JSON.parse(arguments)
             files = json["files"]
             files.each do |file|
               file_manager.create_file(file["file_path"], file["file_content"])
             end
-          when "get_repo"
-            json = JSON.parse(arguments)            
-            puts "reasoning: #{json['reasoning']}"
-            output = ConfigManager.new.context_manager.current_context
+          when "get_repo_files"
+            json = JSON.parse(arguments)
+            files = json["file_paths"]
+            puts "sending files: #{files}"
+            output = files.map do |file|
+              file_manager.get_file(file)
+            end.join("\n\n")
           when "replace_repo_files"
             json = JSON.parse(arguments)
             files = json["files"]

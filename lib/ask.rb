@@ -1,3 +1,5 @@
+require 'pathname'
+
 class Ask
   attr_reader :query
 
@@ -6,6 +8,7 @@ class Ask
   end
 
   def call
+    puts prompt
     create_message
     create_run_and_poll    
   end
@@ -37,15 +40,34 @@ class Ask
   end
 
   def prompt
+    file_tree = build_directory_structure(context_manager.context_paths)
     %Q(
-      [User Message]
-      #{query}
+[User Message]
+#{query}
+
+[Code Repository File Structure]
+#{file_tree}
     )
-    # [Code Repository]
-    # #{context_manager.current_context}
   end
 
   def context_manager
     ConfigManager.new.context_manager
+  end
+
+  def build_directory_structure(paths, prefix = '', result = '')
+    paths.sort.each do |path|
+      basename = File.basename(path)
+  
+      # Check if it's a directory
+      if File.directory?(path)
+        result += "#{prefix}#{basename}/\n"
+        # Recursively list contents of the directory
+        inner_paths = Dir.glob("#{path}/*")
+        result = build_directory_structure(inner_paths, "#{prefix}  ", result)
+      else
+        result += "#{prefix}#{basename}\n"
+      end
+    end
+    result
   end
 end

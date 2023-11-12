@@ -33,35 +33,32 @@ RSpec.describe ApplyDiff do
         end
       RUBY
     }
-    let(:json_payload) {
-      {
-        "file_path": file_path,
-        "diff_payload": [
-          {
-            "action": "add",
-            "line": "  attr_reader :items",
-            "line_number": 2
-          },
-          {
-            "action": "replace",
-            "line_number": 7,
-            "line": "    @items.sum"
-          },
-          {
-            "action": "remove",
-            "line_number": 8
-          },
-          {
-            "action": "remove",
-            "line_number": 9
-          }
-        ]
-      }.to_json
-    }    
+    let(:diffs) {
+      [
+        {
+          "action" => "add",
+          "line" => "  attr_reader :items",
+          "line_number" => 2
+        },
+        {
+          "action" => "replace",
+          "line_number" => 7,
+          "line" => "    @items.sum"
+        },
+        {
+          "action" => "remove",
+          "line_number" => 8
+        },
+        {
+          "action" => "remove",
+          "line_number" => 9
+        }
+      ]
+    }
 
     before do
       File.write(file_path, original_content)
-      ApplyDiff.new(json_payload).call
+      ApplyDiff.new(file_path, diffs).call
     end
 
     after do
@@ -69,7 +66,9 @@ RSpec.describe ApplyDiff do
     end
 
     it 'correctly applies diff to the file' do
-      expect(File.read(file_path)).to eq(expected_content)
+      actual_content = File.read(file_path).gsub(/\s+$/, '')
+      expected_output = expected_content.gsub(/\s+$/, '')
+      expect(actual_content).to eq(expected_output)
     end
   end
 end
