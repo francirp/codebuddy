@@ -1,0 +1,119 @@
+Can you please attempt to update the repo to address the below Rspec failures. Please request a fresh copy of the repo to make sure you're working off the latest code.
+
+➜  codebuddy git:(main) ✗ be rspec                           
+
+An error occurred while loading ./spec/apply_diff_spec.rb.
+Failure/Error: __send__(method, file)
+
+SyntaxError:
+  /Users/francirp/lpl/sandbox/codebuddy/spec/apply_diff_spec.rb:43: syntax error, unexpected ',', expecting `end' or dummy end
+          },
+           ^
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:2117:in `load'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:2117:in `load_file_handling_errors'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:1617:in `block in load_spec_files'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:1615:in `each'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:1615:in `load_spec_files'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:102:in `setup'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:86:in `run'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:71:in `run'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:45:in `invoke'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/exe/rspec:4:in `<top (required)>'
+# /Users/francirp/.rbenv/versions/3.2.0/bin/rspec:25:in `load'
+# /Users/francirp/.rbenv/versions/3.2.0/bin/rspec:25:in `<top (required)>'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli/exec.rb:58:in `load'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli/exec.rb:58:in `kernel_load'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli/exec.rb:23:in `run'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli.rb:492:in `exec'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/vendor/thor/lib/thor/command.rb:27:in `run'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in `invoke_command'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/vendor/thor/lib/thor.rb:392:in `dispatch'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli.rb:34:in `dispatch'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/vendor/thor/lib/thor/base.rb:485:in `start'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli.rb:28:in `start'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/exe/bundle:45:in `block in <top (required)>'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/friendly_errors.rb:117:in `with_friendly_errors'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/exe/bundle:33:in `<top (required)>'
+# /Users/francirp/.rbenv/versions/3.2.0/bin/bundle:25:in `load'
+# /Users/francirp/.rbenv/versions/3.2.0/bin/bundle:25:in `<main>'
+# 
+#   Showing full backtrace because every line was filtered out.
+#   See docs for RSpec::Configuration#backtrace_exclusion_patterns and
+#   RSpec::Configuration#backtrace_inclusion_patterns for more information.
+
+An error occurred while loading ./spec/cli_interface_spec.rb.
+Failure/Error: __send__(method, file)
+
+SyntaxError:
+  /Users/francirp/lpl/sandbox/codebuddy/spec/cli_interface_spec.rb:22: syntax error, unexpected `end'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:2117:in `load'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:2117:in `load_file_handling_errors'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:1617:in `block in load_spec_files'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:1615:in `each'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:1615:in `load_spec_files'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:102:in `setup'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:86:in `run'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:71:in `run'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:45:in `invoke'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/exe/rspec:4:in `<top (required)>'
+# /Users/francirp/.rbenv/versions/3.2.0/bin/rspec:25:in `load'
+# /Users/francirp/.rbenv/versions/3.2.0/bin/rspec:25:in `<top (required)>'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli/exec.rb:58:in `load'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli/exec.rb:58:in `kernel_load'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli/exec.rb:23:in `run'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli.rb:492:in `exec'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/vendor/thor/lib/thor/command.rb:27:in `run'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in `invoke_command'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/vendor/thor/lib/thor.rb:392:in `dispatch'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli.rb:34:in `dispatch'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/vendor/thor/lib/thor/base.rb:485:in `start'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli.rb:28:in `start'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/exe/bundle:45:in `block in <top (required)>'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/friendly_errors.rb:117:in `with_friendly_errors'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/exe/bundle:33:in `<top (required)>'
+# /Users/francirp/.rbenv/versions/3.2.0/bin/bundle:25:in `load'
+# /Users/francirp/.rbenv/versions/3.2.0/bin/bundle:25:in `<main>'
+# 
+#   Showing full backtrace because every line was filtered out.
+#   See docs for RSpec::Configuration#backtrace_exclusion_patterns and
+#   RSpec::Configuration#backtrace_inclusion_patterns for more information.
+
+An error occurred while loading ./spec/file_manager_spec.rb.
+Failure/Error: __send__(method, file)
+
+SyntaxError:
+  /Users/francirp/lpl/sandbox/codebuddy/spec/file_manager_spec.rb:17: syntax error, unexpected `end'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:2117:in `load'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:2117:in `load_file_handling_errors'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:1617:in `block in load_spec_files'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:1615:in `each'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/configuration.rb:1615:in `load_spec_files'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:102:in `setup'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:86:in `run'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:71:in `run'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/lib/rspec/core/runner.rb:45:in `invoke'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/rspec-core-3.12.2/exe/rspec:4:in `<top (required)>'
+# /Users/francirp/.rbenv/versions/3.2.0/bin/rspec:25:in `load'
+# /Users/francirp/.rbenv/versions/3.2.0/bin/rspec:25:in `<top (required)>'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli/exec.rb:58:in `load'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli/exec.rb:58:in `kernel_load'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli/exec.rb:23:in `run'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli.rb:492:in `exec'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/vendor/thor/lib/thor/command.rb:27:in `run'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in `invoke_command'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/vendor/thor/lib/thor.rb:392:in `dispatch'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli.rb:34:in `dispatch'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/vendor/thor/lib/thor/base.rb:485:in `start'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/cli.rb:28:in `start'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/exe/bundle:45:in `block in <top (required)>'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/lib/bundler/friendly_errors.rb:117:in `with_friendly_errors'
+# /Users/francirp/.rbenv/versions/3.2.0/lib/ruby/gems/3.2.0/gems/bundler-2.4.13/exe/bundle:33:in `<top (required)>'
+# /Users/francirp/.rbenv/versions/3.2.0/bin/bundle:25:in `load'
+# /Users/francirp/.rbenv/versions/3.2.0/bin/bundle:25:in `<main>'
+# 
+#   Showing full backtrace because every line was filtered out.
+#   See docs for RSpec::Configuration#backtrace_exclusion_patterns and
+#   RSpec::Configuration#backtrace_inclusion_patterns for more information.
+
+Finished in 0.00003 seconds (files took 0.23492 seconds to load)
+0 examples, 0 failures, 3 errors occurred outside of examples

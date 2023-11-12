@@ -87,6 +87,35 @@ class CLIInterface < Thor
     end    
   end
 
+  desc "prompt_from_file", "Build a prompt from a text file located at 'prompt.txt' and send it to Codebuddy"
+  def prompt_from_file
+    file_path = "prompt.txt"
+    
+    unless File.exist?(file_path)
+      say "File not found: #{file_path}", :red
+      return
+    end
+  
+    file_contents = File.read(file_path).strip
+    if file_contents.empty?
+      say "File is empty.", :yellow
+      return
+    end
+  
+    # You can add any preprocessing to the file contents here if needed
+  
+    # Using the existing ask method infrastructure
+    # Assuming Ask.new accepts the prompt and can handle it accordingly
+    ask_service = Ask.new(file_contents)
+    ask_service.call
+  
+    # Output the response from the GPT-4 service
+    ask_service.assistant_messages.each do |message|
+      say message, :white
+    end
+  end
+  
+
   private
 
   def context_manager
