@@ -11,7 +11,6 @@ module OpenAI
     def call
       puts "polling run..."
       @response = client.get("/v1/threads/#{thread_id}/runs/#{run_id}")
-      binding.pry
       handle_function_calls if requires_action?
       response
     end
@@ -46,7 +45,6 @@ module OpenAI
       outputs = functions.map do |function|
         name = function.dig("function", "name")
         arguments = function.dig("function", "arguments")        
-        
         output = ""
         begin
           case name
@@ -72,7 +70,7 @@ module OpenAI
             end
           when "delete_repo_files"
             json = JSON.parse(arguments)
-            files = json["files"]
+            files = json["file_paths"]
             files.each do |file|
               file_manager.delete_file(file)
             end

@@ -11,10 +11,8 @@ class ApplyDiff
 
     # Sort diffs by line number in descending order
     diffs.sort_by! { |diff| diff["line_number"] }.reverse!
-    binding.pry
     diffs.each do |diff|
       line_number = diff["line_number"] - 1  # Array index starts at 0
-      binding.pry
       
       case diff["action"]
       when "replace"

@@ -4,10 +4,9 @@ class FileManager
   end
 
   def create_file(file_path, content)
+    puts "creating file #{file_path}"
     File.open(file_path, 'w') { |file| file.write(content) }
-    "File created: #{file_path}"
-  rescue => e
-    puts "Error creating file: #{e.message}"
+    puts "File created: #{file_path}"
   end
 
   def update_file(file_path, diffs)
@@ -15,25 +14,21 @@ class FileManager
     apply_diff_service = ApplyDiff.new(file_path, diffs)
     apply_diff_service.call
     puts "File changed: #{file_path}"
-  rescue => e
-    puts "Error changing file: #{e.message}"
   end  
 
   def replace_file(file_path, content)
+    puts "replacing file #{file_path}"
     return "File does not exist: #{file_path}" unless File.exist?(file_path)
 
     File.open(file_path, 'w') { |file| file.write(content) }
-    "File updated: #{file_path}"
-  rescue => e
-    puts "Error updating file: #{e.message}"
+    puts "File updated: #{file_path}"
   end
 
   def delete_file(file_path)
+    puts "deleting file #{file_path}"
     return "File does not exist: #{file_path}" unless File.exist?(file_path)
 
     File.delete(file_path)
-    "File deleted: #{file_path}"
-  rescue => e
-    puts "Error deleting file: #{e.message}"
+    puts "File deleted: #{file_path}"
   end
 end
