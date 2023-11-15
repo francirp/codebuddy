@@ -15,7 +15,7 @@ class ContextManager
     path = resolve_full_path(path)
     return "Path #{path} already in context." if @context_paths.include?(path)
     return "Path does not exist." unless File.exist?(path)
-    return "Adding #{path} exceeds the maximum token limit." if exceeds_token_limit?(path)    
+    # return "Adding #{path} exceeds the maximum token limit." if exceeds_token_limit?(path)    
 
     if File.file?(path)
       allowed_file_type?(path) ? add_path_to_context(path) : unsupported_file_type_message(path)

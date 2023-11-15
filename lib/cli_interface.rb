@@ -1,5 +1,4 @@
 require 'thor'
-require 'tty-spinner'
   # color options for Thor:
     # :on_blue, :bold, :black, :red, :yellow, :blue, :magenta, :cyan, :white, 
     # :on_black, :on_red, :on_green, :on_yellow, :on_magenta, :on_cyan, :on_white
