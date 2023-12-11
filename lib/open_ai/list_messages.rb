@@ -2,9 +2,9 @@ module OpenAI
   class ListMessages
     attr_reader :client, :thread_id, :response
 
-    def initialize
+    def initialize(thread_id)
       @client = Client.new
-      @thread_id = ConfigManager.new.thread_id
+      @thread_id = thread_id
     end
 
     def call

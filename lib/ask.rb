@@ -1,10 +1,15 @@
 require 'pathname'
 
 class Ask
-  attr_reader :query
+  attr_reader :query, :role, :thread_id, :assistant_id
 
-  def initialize(query)
+  def initialize(query, role)
     @query = query
+    @role = role
+    @thread_id = ConfigManager.threads["#{role}_thread_id"]
+    assistant = ConfigManager.assistants.detect {|a| a["role"] == role }
+    raise "The #{role} assistant was not found. Please create the assistant first."
+    @assistant_id = assistant["id"]
   end
 
   def call
@@ -14,7 +19,7 @@ class Ask
   end
 
   def assistant_messages
-    list_messages_service = OpenAI::ListMessages.new
+    list_messages_service = OpenAI::ListMessages.new(thread_id)
     list_messages_service.call
     list_messages_service.recent_assistant_messages
   end  
@@ -22,12 +27,12 @@ class Ask
   private
 
   def create_message
-    message_service = OpenAI::CreateMessage.new(prompt)
+    message_service = OpenAI::CreateMessage.new(prompt, thread_id)
     message_service.call
   end
 
   def create_run_and_poll
-    run_service = OpenAI::CreateRun.new
+    run_service = OpenAI::CreateRun.new(thread_id, assistant_id)
     run_service.call
 
     finished = false

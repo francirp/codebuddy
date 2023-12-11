@@ -2,9 +2,9 @@ module OpenAI
   class CreateMessage
     attr_reader :client, :thread_id, :response, :content
 
-    def initialize(content)
+    def initialize(content, thread_id)
       @client = Client.new
-      @thread_id = ConfigManager.new.thread_id
+      @thread_id = thread_id
       @content = content
     end
 

@@ -17,15 +17,19 @@ class CLIInterface < Thor
     puts "Starting Codebuddy..."
     @context_manager = ContextManager.new
     
-    thread_service = OpenAI::CreateThread.new
-    thread_service.call
-    config_manager.thread_id = thread_service.id
+    threads = config_manager.assistants.map do |assistant|
+      thread_service = OpenAI::CreateThread.new
+      thread_service.call
+      role = assistant["role"]
+      config_manager.threads["#{role}_thread_id"] = assistant["id"]
+    end
+        
     config_manager.save_config
-    
+
     config_manager.context_manager = @context_manager
     config_manager.save_context
     
-    puts "Codebuddy ready. Call `codebuddy ask` to ask your AI Agent to do something."
+    puts "Codebuddy ready. Call `codebuddy ask -r [pm design dev]` to ask your AI Agents to do something."
   end
 
   desc "set_openai_key KEY", "Set your OpenAI API key"
@@ -35,6 +39,14 @@ class CLIInterface < Thor
     config_manager.save_config
     puts "OpenAI API key updated."
   end
+
+  # desc "create_assistant ROLE ID", "Create your OpenAI API key"
+  # def create_assistant(role, id)
+  #   config_manager
+  #   config_manager.assistants[role] = id
+  #   config_manager.save_config
+  #   puts "Assistant added."
+  # end  
 
   desc "add PATH", "Add a file or directory to Codebuddy's context by providing its path"
   def add(path)    
@@ -66,25 +78,23 @@ class CLIInterface < Thor
   end
 
   desc "ask", "Send a query to Codebuddy"
+  method_option :role, aliases: "-r", desc: "Specify the role (pm, designer, dev)", enum: ["pm", "designer", "dev"]
   def ask
     say "\e[1mAsk your AI buddy to do something or a question.\e[22m", :green
     print "> "
     query = $stdin.gets.strip
-
-    say ""
-
-    # spinner = TTY::Spinner.new("[:spinner] Processing...", format: :pulse_2)
-    # spinner.auto_spin
-
-    ask_service = Ask.new(query)
+  
+    role = options[:role] || "pm" # Retrieve the specified role
+    say "AI role being used: #{role}" if role # Optionally, display the specified role
+  
+    ask_service = Ask.new(query, role) # Pass the role to your service
     ask_service.call
-    
-    # spinner.stop('Assistant responded:')
-    
+  
     ask_service.assistant_messages.each do |message|
       say message, :white
     end    
   end
+  
 
   desc "prompt_from_file", "Build a prompt from a text file located at 'prompt.txt' and send it to Codebuddy"
   def prompt_from_file

@@ -2,10 +2,10 @@ module OpenAI
   class CreateRun
     attr_reader :client, :thread_id, :response, :assistant_id, :model
 
-    def initialize
+    def initialize(thread_id, assistant_id)
       @client = Client.new
-      @thread_id = ConfigManager.new.thread_id
-      @assistant_id = "asst_U1V5mpmhHpmuvEQYU5ZudKJ2" # TODO: make this a config setting, or create the assistant for the user
+      @thread_id = thread_id
+      @assistant_id = assistant_id # TODO: make this a config setting, or create the assistant for the user
       @model = "gpt-4-1106-preview" # TODO: make this a config setting
     end
 
