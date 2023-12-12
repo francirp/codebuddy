@@ -6,5 +6,6 @@ module Actions
         file_manager.replace_file(file["file_path"], file["file_content"])
       end
       output = "success"
+    end
   end
 end

@@ -6,9 +6,10 @@ class Ask
   def initialize(query, role)
     @query = query
     @role = role
-    @thread_id = ConfigManager.threads["#{role}_thread_id"]
-    assistant = ConfigManager.assistants.detect {|a| a["role"] == role }
-    raise "The #{role} assistant was not found. Please create the assistant first."
+
+    @thread_id = config_manager.threads["#{role}_thread_id"]
+    assistant = config_manager.assistants.detect {|a| a["role"] == role }
+    raise "The #{role} assistant was not found. Please create the assistant first." unless assistant
     @assistant_id = assistant["id"]
   end
 
@@ -38,7 +39,7 @@ class Ask
     finished = false
     while !finished
       sleep(2)
-      retrieve_run_service = OpenAI::RetrieveRun.new(run_service.id)
+      retrieve_run_service = OpenAI::RetrieveRun.new(run_service.id, thread_id)
       retrieve_run_service.call
       finished = retrieve_run_service.finished?
     end    
@@ -58,8 +59,12 @@ class Ask
     )
   end
 
+  def config_manager
+    @config_manager ||= ConfigManager.new
+  end
+
   def context_manager
-    ConfigManager.new.context_manager
+    @context_manager ||= config_manager.context_manager
   end
 
   def generate_tree_structure(paths)

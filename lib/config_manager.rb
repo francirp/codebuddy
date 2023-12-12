@@ -1,6 +1,7 @@
 class ConfigManager
-  CONFIG_FILE = File.join(Dir.home, '.codebuddy_config.json')
-  CONTEXT_FILE = File.join(Dir.home, '.codebuddy_context.json')
+  CONFIG_DIRECTORY = './codebuddy-workspace/config'
+  CONFIG_FILE = File.join(CONFIG_DIRECTORY, '.codebuddy_config.json')
+  CONTEXT_FILE = File.join(CONFIG_DIRECTORY, '.codebuddy_context.json')
 
   attr_accessor :openai_key, :threads, :assistants, :context_manager
 
@@ -13,12 +14,12 @@ class ConfigManager
   end
 
   def save_config
+    update_gitignore
+    FileUtils.mkdir_p(CONFIG_DIRECTORY) unless Dir.exist?(CONFIG_DIRECTORY)        
     hash = {
       openai_key: openai_key,
       threads: threads,
       assistants: assistants,
-      design_assistant_id: design_assistant_id,
-      dev_assistant_id: dev_assistant_id,
     }
     File.write(CONFIG_FILE, JSON.pretty_generate(hash))
   end
@@ -52,4 +53,24 @@ class ConfigManager
       { 'role' => 'dev', 'id' => 'asst_U1V5mpmhHpmuvEQYU5ZudKJ2'},
     ]
   end
+
+  def update_gitignore
+    gitignore_path = './.gitignore'
+    codebuddy_ignore_entry = '/codebuddy-workspace/config'
+
+    if File.exist?(gitignore_path)
+      gitignore_contents = File.read(gitignore_path)
+
+      # Check if the ignore entry already exists
+      unless gitignore_contents.include?(codebuddy_ignore_entry)
+        # Append the entry to the .gitignore file
+        File.open(gitignore_path, 'a') do |file|
+          file.puts "\n#{codebuddy_ignore_entry}"
+        end
+      end
+    else
+      # Create a new .gitignore file with the ignore entry
+      File.write(gitignore_path, codebuddy_ignore_entry)
+    end
+  end  
 end

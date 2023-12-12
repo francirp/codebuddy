@@ -1,22 +1,24 @@
 # frozen_string_literal: true
 require "pry"
+require "httparty"
 require_relative "codebuddy/version"
 require_relative "./command_executor"
 require_relative "./generate_tree"
-require_relative "./chat_gpt_assistant"
 require_relative "./context_manager"
 require_relative "./file_manager"
 require_relative "./config_manager"
 require_relative "./ask"
 require_relative "./apply_diff"
 require_relative "./cli_interface"
-require_relative "./open_ai/client"
-require_relative "./open_ai/create_message"
-require_relative "./open_ai/create_run"
-require_relative "./open_ai/create_thread"
-require_relative "./open_ai/retrieve_run"
-require_relative "./open_ai/submit_tool_outputs"
-require_relative "./open_ai/list_messages"
+
+Dir.glob(File.join(File.dirname(__FILE__), 'open_ai', '*.rb')).each do |file|
+  require_relative file
+end
+
+Dir.glob(File.join(File.dirname(__FILE__), 'actions', '*.rb')).each do |file|
+  require_relative file
+end
+
 
 module Codebuddy
   class Error < StandardError; end

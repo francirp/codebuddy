@@ -2,7 +2,7 @@ class ContextManager
   MAX_TOKEN_LIMIT = 100_000
   AVG_CHARS_PER_TOKEN = 4
   MAX_CHAR_LIMIT = MAX_TOKEN_LIMIT * AVG_CHARS_PER_TOKEN
-  ALLOWED_EXTENSIONS = ['.rb', '.txt', '.css', '.html', '.erb', '.js', '.jsx', 'Gemfile']
+  ALLOWED_EXTENSIONS = ['.rb', '.txt', '.css', '.html', '.erb', '.js', '.jsx', 'Gemfile', '.md']
 
   attr_reader :context_paths, :current_char_count
 

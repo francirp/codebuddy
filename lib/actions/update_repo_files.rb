@@ -7,5 +7,6 @@ module Actions
         file_manager.update_file(file["file_path"], diffs)
       end
       output = "success"
+    end
   end
 end

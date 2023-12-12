@@ -6,5 +6,6 @@ module Actions
       output = files.map do |file|
         file_manager.get_file(file)
       end.join("\n\n")
+    end
   end
 end

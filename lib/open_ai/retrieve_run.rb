@@ -2,9 +2,9 @@ module OpenAI
   class RetrieveRun
     attr_reader :client, :thread_id, :run_id, :response
 
-    def initialize(run_id)
+    def initialize(run_id, thread_id)
       @client = Client.new
-      @thread_id = ConfigManager.new.thread_id
+      @thread_id = thread_id
       @run_id = run_id
     end
 
