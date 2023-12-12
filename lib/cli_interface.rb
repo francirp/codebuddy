@@ -80,13 +80,15 @@ class CLIInterface < Thor
   desc "ask", "Send a query to Codebuddy"
   method_option :role, aliases: "-r", desc: "Specify the role (pm, designer, dev)", enum: ["pm", "designer", "dev"]
   def ask
+    start if config_manager.threads.empty?
+    
     say "\e[1mAsk your AI buddy to do something or a question.\e[22m", :green
     print "> "
     query = $stdin.gets.strip
   
     role = options[:role] || "pm" # Retrieve the specified role
     say "AI role being used: #{role}" if role # Optionally, display the specified role
-  
+    
     ask_service = Ask.new(query, role) # Pass the role to your service
     ask_service.call
   

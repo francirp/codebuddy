@@ -54,7 +54,9 @@ class Ask
 [User Message]
 #{query}
 
-#{file_tree.empty? ? "" : "[Code Repository File Structure]"}
+#{file_tree.empty? ? "" : "[Content & Code Repository Structure]"}
+Note: The codebuddy-workspace directory contains product & design resources from the LaunchPad Lab team that you can fetch to understand the product & design plan.
+
 #{file_tree}
     )
   end
@@ -101,4 +103,27 @@ class Ask
       end
     end.join("\n")
   end
+
+  # def product_content
+  #   files = Dir.glob(File.join('./codebuddy-workspace', 'content', '**/*')).select do |file|
+  #     File.file?(file)
+  #   end
+
+  #   files.map do |file_path|
+  #     file_lines = File.readlines(file_path)
+  #     lines_string = file_lines.map.with_index {|line, i| "#{i + 1}. #{line}"}.join
+  #     "#{file_path}:\n```\n#{lines_string}\n```\n\n"
+  # end
+
+  # def handle_directory(directory_path)
+  #   allowed_files = get_allowed_files(directory_path)
+    
+  #   result = allowed_files.map do |file|
+  #     handle_file(file)
+  #   end.join("\n\n")
+  # end
+
+  # def handle_file(file_path)
+
+  # end  
 end

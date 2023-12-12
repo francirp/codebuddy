@@ -9,6 +9,7 @@ class ContextManager
   def initialize
     @context_paths = []
     @current_char_count = 0
+    add_path(ConfigManager::CONTENT_DIRECTORY)
   end
 
   def add_path(path)

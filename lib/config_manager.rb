@@ -1,11 +1,15 @@
 class ConfigManager
-  CONFIG_DIRECTORY = './codebuddy-workspace/config'
+  CODEBUDDY_DIRECTORY = 'codebuddy-workspace'
+  CONFIG_DIRECTORY = "#{CODEBUDDY_DIRECTORY}/config"
   CONFIG_FILE = File.join(CONFIG_DIRECTORY, '.codebuddy_config.json')
   CONTEXT_FILE = File.join(CONFIG_DIRECTORY, '.codebuddy_context.json')
+  CONTENT_DIRECTORY = "#{CODEBUDDY_DIRECTORY}/content"
 
   attr_accessor :openai_key, :threads, :assistants, :context_manager
 
   def initialize
+    update_gitignore
+    make_directories    
     config = load_config
     @openai_key = config["openai_key"]
     @threads = config["threads"] || {}
@@ -13,9 +17,7 @@ class ConfigManager
     @context_manager = load_context
   end
 
-  def save_config
-    update_gitignore
-    FileUtils.mkdir_p(CONFIG_DIRECTORY) unless Dir.exist?(CONFIG_DIRECTORY)        
+  def save_config        
     hash = {
       openai_key: openai_key,
       threads: threads,
@@ -56,7 +58,7 @@ class ConfigManager
 
   def update_gitignore
     gitignore_path = './.gitignore'
-    codebuddy_ignore_entry = '/codebuddy-workspace/config'
+    codebuddy_ignore_entry = CONFIG_DIRECTORY
 
     if File.exist?(gitignore_path)
       gitignore_contents = File.read(gitignore_path)
@@ -72,5 +74,10 @@ class ConfigManager
       # Create a new .gitignore file with the ignore entry
       File.write(gitignore_path, codebuddy_ignore_entry)
     end
-  end  
+  end
+  
+  def make_directories
+    FileUtils.mkdir_p(CONFIG_DIRECTORY) unless Dir.exist?(CONFIG_DIRECTORY)
+    FileUtils.mkdir_p(CONTENT_DIRECTORY) unless Dir.exist?(CONTENT_DIRECTORY)
+  end
 end
