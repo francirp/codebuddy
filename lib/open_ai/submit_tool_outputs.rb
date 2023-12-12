@@ -2,10 +2,10 @@ module OpenAI
   class SubmitToolOutputs
     attr_reader :client, :thread_id, :run_id, :tool_id, :tool_outputs, :response
 
-    def initialize(run_id, tool_outputs)
+    def initialize(thread_id, run_id, tool_outputs)
       @client = Client.new
       @run_id = run_id
-      @thread_id = ConfigManager.new.thread_id
+      @thread_id = thread_id
       @tool_outputs = tool_outputs
     end
 

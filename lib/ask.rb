@@ -51,8 +51,12 @@ class Ask
     file_tree = tree_generator.call
 
     %Q(
-[User Message]
-#{query}
+[Client Message]
+#{query.empty? ? file_prompt : query}
+
+[Todo Management]
+If you'd like the client to answer questions or perform a task, please create a .md file using create_files function in codebuddy-workspace/todos outlining your requests.
+The client will indicate once done then you can use get_files function to retrieve the file with the completed information.
 
 #{file_tree.empty? ? "" : "[Content & Code Repository Structure]"}
 Note: The codebuddy-workspace directory contains product & design resources from the LaunchPad Lab team that you can fetch to understand the product & design plan.
@@ -102,6 +106,11 @@ Note: The codebuddy-workspace directory contains product & design resources from
         "#{prefix}#{key}/\n" + format_tree(children, "#{prefix}  ")
       end
     end.join("\n")
+  end
+
+  def file_prompt
+    prompt_file_path = "#{ConfigManager::CODEBUDDY_DIRECTORY}/prompt.md"
+    File.read(prompt_file_path) if File.exist?(prompt_file_path)
   end
 
   # def product_content

@@ -1,5 +1,5 @@
 module Actions
-  class CreateRepoFiles < Action
+  class CreateFiles < Action
     def call
       files = params["files"]
       files.each do |file|

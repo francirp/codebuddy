@@ -81,20 +81,31 @@ class CLIInterface < Thor
   method_option :role, aliases: "-r", desc: "Specify the role (pm, designer, dev)", enum: ["pm", "designer", "dev"]
   def ask
     start if config_manager.threads.empty?
+
+    role = options[:role] # Retrieve the specified role
+
+    no_role_selected = role ? false : true
+    while no_role_selected
+      say "\e[1mWho do you want to ask? (PM, designer, dev) \e[22m", :green
+      print "> "
+      role = $stdin.gets.strip
+      no_role_selected = !["pm", "designer", "dev"].include?(role.downcase)
+    end
     
-    say "\e[1mAsk your AI buddy to do something or a question.\e[22m", :green
+    say "\e[1mAsk your AI #{role} to do something or a question.\e[22m", :green
     print "> "
     query = $stdin.gets.strip
-  
-    role = options[:role] || "pm" # Retrieve the specified role
-    say "AI role being used: #{role}" if role # Optionally, display the specified role
+
+    return if query == 'exit'
     
     ask_service = Ask.new(query, role) # Pass the role to your service
     ask_service.call
   
     ask_service.assistant_messages.each do |message|
       say message, :white
-    end    
+    end
+
+    ask # loop until the user exits the conversation
   end
   
 

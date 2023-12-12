@@ -4,6 +4,8 @@ class ConfigManager
   CONFIG_FILE = File.join(CONFIG_DIRECTORY, '.codebuddy_config.json')
   CONTEXT_FILE = File.join(CONFIG_DIRECTORY, '.codebuddy_context.json')
   CONTENT_DIRECTORY = "#{CODEBUDDY_DIRECTORY}/content"
+  TODOS_DIRECTORY = "#{CODEBUDDY_DIRECTORY}/todos"
+  PROMPT_FILE_PATH = "#{CODEBUDDY_DIRECTORY}/prompt.md"
 
   attr_accessor :openai_key, :threads, :assistants, :context_manager
 
@@ -51,7 +53,7 @@ class ConfigManager
   def create_default_assistants
     @assistants = [
       { 'role' => 'pm', 'id' => 'asst_BlL1TdPlf44EVcf1ZbWuzzB4'},
-      { 'role' => 'design', 'id' => 'asst_YEiAj7SWMRws3X4s19VXU4If'},
+      { 'role' => 'designer', 'id' => 'asst_YEiAj7SWMRws3X4s19VXU4If'},
       { 'role' => 'dev', 'id' => 'asst_U1V5mpmhHpmuvEQYU5ZudKJ2'},
     ]
   end
@@ -79,5 +81,7 @@ class ConfigManager
   def make_directories
     FileUtils.mkdir_p(CONFIG_DIRECTORY) unless Dir.exist?(CONFIG_DIRECTORY)
     FileUtils.mkdir_p(CONTENT_DIRECTORY) unless Dir.exist?(CONTENT_DIRECTORY)
+    FileUtils.mkdir_p(TODOS_DIRECTORY) unless Dir.exist?(TODOS_DIRECTORY)
+    File.write(PROMPT_FILE_PATH, "") unless File.exist?(PROMPT_FILE_PATH)
   end
 end

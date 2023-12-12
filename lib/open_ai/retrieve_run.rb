@@ -11,6 +11,7 @@ module OpenAI
     def call
       puts "polling run..."
       @response = client.get("/v1/threads/#{thread_id}/runs/#{run_id}")
+      binding.pry
       puts "run status: #{status}"
       handle_function_calls if requires_action?
       response
@@ -58,7 +59,7 @@ module OpenAI
         }        
       end
 
-      SubmitToolOutputs.new(id, tool_output_hashes).call
+      SubmitToolOutputs.new(thread_id, id, tool_output_hashes).call
     end
   end
 end
