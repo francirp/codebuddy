@@ -49,18 +49,14 @@ class Ask
     absolute_paths = context_manager.context_paths.map { |path| File.expand_path(path) }
     tree_generator = GenerateTree.new(absolute_paths)
     file_tree = tree_generator.call
-
+    # [Todo Management]
+    # If you'd like the client to answer questions or perform a task, please create a .md file using create_files function in codebuddy-workspace/todos outlining your requests.
+    # The client will indicate once done then you can use get_files function to retrieve the file with the completed information.
     %Q(
 [Client Message]
 #{query.empty? ? file_prompt : query}
 
-[Todo Management]
-If you'd like the client to answer questions or perform a task, please create a .md file using create_files function in codebuddy-workspace/todos outlining your requests.
-The client will indicate once done then you can use get_files function to retrieve the file with the completed information.
-
 #{file_tree.empty? ? "" : "[Content & Code Repository Structure]"}
-Note: The codebuddy-workspace directory contains product & design resources from the LaunchPad Lab team that you can fetch to understand the product & design plan.
-
 #{file_tree}
     )
   end

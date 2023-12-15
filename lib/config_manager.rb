@@ -52,6 +52,7 @@ class ConfigManager
 
   def create_default_assistants
     @assistants = [
+      { 'role' => 'cp', 'id' => 'asst_aNABKJEPVDVFYEH4jYHJzie8'},
       { 'role' => 'pm', 'id' => 'asst_BlL1TdPlf44EVcf1ZbWuzzB4'},
       { 'role' => 'designer', 'id' => 'asst_YEiAj7SWMRws3X4s19VXU4If'},
       { 'role' => 'dev', 'id' => 'asst_U1V5mpmhHpmuvEQYU5ZudKJ2'},

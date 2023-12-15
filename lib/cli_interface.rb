@@ -83,22 +83,23 @@ class CLIInterface < Thor
     start if config_manager.threads.empty?
 
     role = options[:role] # Retrieve the specified role
+    possible_roles = config_manager.assistants.map {|a| a["role"].downcase }
 
     no_role_selected = role ? false : true
     while no_role_selected
-      say "\e[1mWho do you want to ask? (PM, designer, dev) \e[22m", :green
+      say "\e[1mWho do you want to ask? (#{possible_roles.join(", ")}) \e[22m", :cyan
       print "> "
       role = $stdin.gets.strip
-      no_role_selected = !["pm", "designer", "dev"].include?(role.downcase)
+      no_role_selected = !possible_roles.include?(role.downcase)
     end
     
-    say "\e[1mAsk your AI #{role} to do something or a question.\e[22m", :green
+    say "\e[1mAsk your AI #{role} to do something or a question. Just press enter if you are prompting from codebuddy-workspace/prompt.md\e[22m", :green
     print "> "
     query = $stdin.gets.strip
 
     return if query == 'exit'
     
-    ask_service = Ask.new(query, role) # Pass the role to your service
+    ask_service = Ask.new(query, role.downcase) # Pass the role to your service
     ask_service.call
   
     ask_service.assistant_messages.each do |message|
